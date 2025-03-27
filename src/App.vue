@@ -1,4 +1,5 @@
 <script setup>
+import "./assets/styles/style.css";
 import { PDFDocument, StandardFonts, rgb, degrees } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
 import truques from "./magias/truques";
@@ -304,6 +305,7 @@ const allMagics = computed(() => {
   max-width: 1280px;
   width: 100%;
   margin-inline: auto;
+  padding-bottom: 100px;
 }
 
 .page__filterPanel {
