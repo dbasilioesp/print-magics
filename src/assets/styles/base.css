@@ -1,0 +1,53 @@
+:root {
+  /* Spaces */
+  --headerHeight: 110px;
+  --container: 1600px;
+
+  --fontTitle: Faculty Glyphic, sans-serif;
+  --fontText: "Metropolis", sans-serif;
+  --fontDisplay: "Times New Roman", Times, serif;
+
+  /* Colors */
+  --red: #e01919;
+  --purple: #4d427b;
+  --yellow: #f59b3b;
+  --orange: #f08037;
+  --lilas: #7e72b3;
+  --blue: #333b8e;
+  --darkgrey: #303030;
+  --textGrey: #64748b;
+
+  /* Shadows */
+  --shadowText: 0 -2px 44px rgba(0, 0, 0, 0.5);
+  --dropShadow: drop-shadow(4px 4px var(--textGrey));
+
+  /* Overlay */
+  --overlayPurple: linear-gradient(
+    to right,
+    color(from var(--purple) srgb r g b / 0.8) 0%,
+    color(from var(--purple) srgb r g b / 0.8) 100%
+  );
+  --overlayGray: linear-gradient(
+    to right,
+    color(from var(--darkgrey) srgb r g b / 0.8) 0%,
+    color(from var(--darkgrey) srgb r g b / 0.8) 100%
+  );
+}
+
+html {
+  font-family: var(--fontText);
+}
+
+body:has(dialog[open]) {
+  overflow: hidden;
+}
+
+figcaption {
+  font-size: 0.8rem;
+  margin-top: 5px;
+  opacity: 0.5;
+}
+
+dialog::backdrop {
+  backdrop-filter: blur(2px);
+}

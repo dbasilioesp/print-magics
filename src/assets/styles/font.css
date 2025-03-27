@@ -1,0 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Faculty+Glyphic&display=swap");
+
+@font-face {
+  font-family: "Metropolis";
+  font-weight: 300;
+  src: url("../fonts/Metropolis/metropolis.light.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Metropolis";
+  font-weight: 400;
+  src: url("../fonts/Metropolis/metropolis.regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Metropolis";
+  font-weight: 500;
+  src: url("../fonts/Metropolis/metropolis.medium.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Metropolis";
+  font-weight: 600;
+  src: url("../fonts/Metropolis/metropolis.bold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Metropolis";
+  font-weight: 700;
+  src: url("../fonts/Metropolis/metropolis.bold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Metropolis";
+  font-weight: 800;
+  src: url("../fonts/Metropolis/metropolis.extra-bold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Metropolis";
+  font-weight: 900;
+  src: url("../fonts/Metropolis/metropolis.black.otf") format("opentype");
+}

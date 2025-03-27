@@ -1,0 +1,238 @@
+/* 
+* Buttons
+* Box
+* Grids
+* Links
+* Post
+*/
+
+/* Buttons */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--yellow);
+  color: white;
+  height: 40px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  font-size: 16px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  padding: 0 20px;
+  font-family: var(--fontTitle);
+  filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07))
+    drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+}
+
+.button:hover {
+  background-color: var(--orange);
+}
+
+.button.isBlack {
+  background-color: #030712;
+  color: white;
+}
+
+.button.isOutline {
+  background-color: transparent;
+  border: 1px solid var(--textGrey);
+  color: var(--textGrey);
+  transition: all 200ms;
+
+  &:hover,
+  &:focus {
+    background-color: var(--textGrey);
+    color: white;
+  }
+}
+
+.button.isBig {
+  height: 50px;
+  font-size: 18px;
+}
+
+/* Box */
+
+.colorbox {
+  background-color: var(--orange);
+  border-radius: 6px;
+  padding: 30px 40px;
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .colorbox {
+    padding: 20px;
+  }
+}
+
+/* Link */
+.link {
+  color: var(--orange);
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* Figure */
+
+.bidImage {
+  border-radius: 20px;
+  filter: var(--dropShadow);
+}
+
+/* Post */
+
+.article *:is(p, h1, h2, h3, a) {
+  /* font-family: Roboto; */
+}
+
+.article p {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  font-weight: 400;
+  font-family: var(--fontText);
+  letter-spacing: 0.2px;
+}
+
+.article h1 {
+  font-size: 1.85rem;
+  line-height: 1.2;
+  font-weight: 600;
+  margin-block: 20px;
+  font-family: var(--fontTitle);
+}
+
+.article h1:not(:first-child) {
+  margin-top: 60px;
+}
+
+.article h2 {
+  font-size: 1.6rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  margin-top: 30px;
+  font-family: var(--fontTitle);
+}
+
+.article h3 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  font-family: var(--fontTitle);
+}
+
+.article h2 a {
+  font-size: inherit;
+  line-height: inherit;
+  font-weight: inherit;
+}
+
+.article blockquote {
+  color: var(--purple);
+  font-weight: 500;
+  font-style: italic;
+  padding-left: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.article blockquote p {
+  font-weight: inherit;
+}
+
+.article ul {
+  margin-bottom: 20px;
+  padding-left: 20px;
+  font-weight: 500;
+}
+
+.article li {
+  list-style: disc;
+  margin-bottom: 10px;
+  font-size: 15px;
+  font-family: var(--fontTitle);
+}
+
+.history {
+  max-width: 140ch;
+  text-align: justify;
+}
+
+.history *:is(i, a, p, h1, h2, h3) {
+  font-family: Libre Baskerville;
+}
+
+.history p {
+  font-size: 15px;
+  line-height: 1.4;
+  margin-bottom: 20px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+}
+
+.article a:not([href^="#"]) {
+  color: var(--yellow);
+}
+
+.history h1 {
+  font-size: 1.85rem;
+  line-height: 1.2;
+  font-weight: 600;
+  margin-block: 20px;
+}
+
+.history h2 {
+  font-size: 1.6rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  margin-top: 30px;
+}
+
+.history h3 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.history h2 a {
+  font-size: inherit;
+  line-height: inherit;
+  font-weight: inherit;
+}
+
+.history blockquote {
+  color: var(--purple);
+  font-weight: 500;
+  font-style: italic;
+  padding-left: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.history blockquote p {
+  font-weight: inherit;
+}
+
+.history ul {
+  margin-bottom: 20px;
+  padding-left: 20px;
+  font-weight: 500;
+}
+
+.history li {
+  list-style: disc;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
