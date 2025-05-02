@@ -2,6 +2,7 @@
 
 @import "./reset.css";
 @import "./font.css";
+@import "./vars.css";
 @import "./base.css";
 @import "./components.css";
 @import "./gears.css";

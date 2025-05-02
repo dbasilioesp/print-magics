@@ -1,7 +1,7 @@
 {
   "name": "print-magics",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -16,5 +16,15 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",
     "vite": "^6.2.0"
+  },
+  "files": ["dist"],
+  "main": "./dist/print-magics.umd.cjs",
+  "module": "./dist/print-magics.js",
+  "exports": {
+    ".": {
+      "import": "./dist/print-magics.js",
+      "require": "./dist/print-magics.umd.cjs"
+    },
+    "./style.css": "./dist/print-magics.css"
   }
 }

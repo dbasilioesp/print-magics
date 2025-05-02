@@ -1,0 +1,37 @@
+:root {
+  /* Spaces */
+  --headerHeight: 110px;
+  --container: 1600px;
+
+  --fontTitle: Faculty Glyphic, sans-serif;
+  --fontText: "Metropolis", sans-serif;
+  --fontDisplay: "Domine", Times, serif;
+
+  /* Colors */
+  --red: #e01919;
+  --purple: #4d427b;
+  --yellow: #f59b3b;
+  --orange: #f08037;
+  --lilas: #7e72b3;
+  --blue: #333b8e;
+  --darkgrey: #303030;
+  --textGrey: #64748b;
+
+  /* Shadows */
+  --shadowText: 0 -2px 44px rgba(0, 0, 0, 0.5);
+  --dropShadow: drop-shadow(4px 4px var(--textGrey));
+  --lightDropShadow: 25px 0 20px -20px rgba(255, 255, 255, 0.35),
+    -25px 0 20px -20px rgba(255, 255, 255, 0.35);
+
+  /* Overlay */
+  --overlayPurple: linear-gradient(
+    to right,
+    color(from var(--purple) srgb r g b / 0.8) 0%,
+    color(from var(--purple) srgb r g b / 0.8) 100%
+  );
+  --overlayGray: linear-gradient(
+    to right,
+    color(from var(--darkgrey) srgb r g b / 0.8) 0%,
+    color(from var(--darkgrey) srgb r g b / 0.8) 100%
+  );
+}
