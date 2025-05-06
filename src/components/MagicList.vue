@@ -38,7 +38,7 @@ const handlePrevious = () => {
 </script>
 
 <template>
-  <h3 class="magicGroupTitle">{{ label }}</h3>
+  <h3 class="magicGroupTitle" v-if="magics.length">{{ label }}</h3>
   <div class="rollGrid" style="--min: 220px; --mt: 20px">
     <MagicSelect
       v-for="magic in magics"

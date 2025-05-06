@@ -145,7 +145,7 @@ const selected = computed(() => model.value.includes(props.magia.Titulo));
 }
 
 .magicCard:is(:hover, :focus-within) .magicCard__buttons {
-  width: 80px;
+  width: 100px;
 
   button {
     opacity: 1;
@@ -164,13 +164,13 @@ const selected = computed(() => model.value.includes(props.magia.Titulo));
 }
 
 .magicCard:hover .magicCard__indicator {
-  right: -20px;
+  right: -30px;
   opacity: 0;
   width: 0;
 }
 
 .magicCard__button {
-  width: 40px;
+  width: 50px;
   height: 100%;
   background-color: var(--bg-button);
   cursor: pointer;

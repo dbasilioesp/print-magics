@@ -54,22 +54,22 @@ const nextCardAnimation = (callback, reverse = false) => {
 };
 
 const handleClick = (event) => {
-  // let rect = el.value.getBoundingClientRect();
-  // if (
-  //   rect.left > event.clientX ||
-  //   rect.right < event.clientX ||
-  //   rect.top > event.clientY ||
-  //   rect.bottom < event.clientY
-  // ) {
-  //   el.value.close();
-  // }
+  let rect = el.value.getBoundingClientRect();
+  if (
+    rect.left > event.clientX ||
+    rect.right < event.clientX ||
+    rect.top > event.clientY ||
+    rect.bottom < event.clientY
+  ) {
+    el.value.close();
+  }
 };
 
 const handleClose = () => {
-  // el.value.close();
-  // setTimeout(() => {
-  //   magic.value = null;
-  // }, 500);
+  el.value.close();
+  setTimeout(() => {
+    magic.value = null;
+  }, 500);
 };
 
 const navPrevious = () => {

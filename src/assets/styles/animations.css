@@ -1,0 +1,9 @@
+.v-enter-active,
+.v-leave-active {
+  transition: opacity var(--timing, 0.5s) var(--easing, ease);
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}

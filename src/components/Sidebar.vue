@@ -1,0 +1,146 @@
+<script setup>
+defineProps({
+  magics: Array,
+  selectedMagics: Array,
+});
+
+defineEmits(["clear"]);
+</script>
+
+<template>
+  <dialog id="magicsSidebar" class="magicsSidebar" ref="magicsSidebar">
+    <button
+      class="magicsSidebar__buttonClose"
+      type="button"
+      @click="magicsSidebar.close()"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    <div class="magicsSidebar__wrap">
+      <h2>Selecionados:</h2>
+
+      <Transition mode="out-in" style="--easing: ease-in-out; --timing: 0.25s">
+        <div style="color: gray" v-if="selectedMagics.length === 0">
+          Nenhuma magia selecionada.
+        </div>
+
+        <div class="magicsSidebar__wrapIn" v-else>
+          <div>
+            <button
+              type="button"
+              class="button isSmall isOption"
+              @click="$emit('clear')"
+            >
+              Limpar lista
+            </button>
+          </div>
+
+          <template v-for="magicNivel in magics" :key="magicNivel.label">
+            <div v-if="magicNivel.selecteds.length > 0">
+              <h3>{{ magicNivel.title }}</h3>
+              <div v-for="magic in magicNivel.selecteds" :key="magic.Titulo">
+                {{ magic.Titulo }}
+              </div>
+            </div>
+          </template>
+        </div>
+      </Transition>
+    </div>
+  </dialog>
+</template>
+
+<style scoped>
+.magicsSidebar {
+  border-radius: 4px;
+  background-color: #2a3140;
+  color: white;
+  max-height: 600px;
+  padding: 10px 2px 0 10px;
+
+  h2 {
+    margin-inline: 0;
+    margin-block: 4px;
+  }
+
+  &[open] {
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    height: 100%;
+    max-width: 400px;
+    width: 100%;
+    padding: 16px 2px 0 20px;
+
+    @media (max-width: 420px) {
+      max-width: 100%;
+      max-height: 100%;
+      width: calc(100% - 60px);
+      height: calc(100% - 60px);
+    }
+  }
+
+  @media (min-width: 601px) {
+    display: flex;
+    position: fixed;
+    right: 0;
+    width: 300px;
+    left: auto;
+    top: 0;
+    height: 100vh;
+    max-height: unset;
+    padding: 20px;
+    border-left: 8px solid var(--textGrey);
+    border-top: 0;
+    border-bottom: 0;
+  }
+}
+
+.magicsSidebar__wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+
+  overflow: auto;
+  /* max-height: 100%; */
+  scrollbar-width: thin;
+  scrollbar-color: white #2a3140;
+}
+
+.magicsSidebar__wrapIn {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.magicsSidebar__buttonClose {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: none;
+  border: 0;
+  display: none;
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+}
+
+.magicsSidebar[open] .magicsSidebar__buttonClose {
+  display: block;
+}
+</style>

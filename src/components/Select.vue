@@ -167,7 +167,7 @@ onUnmounted(() => {
 
 <style>
 .select {
-  --font: var(--fontText);
+  --font: var(--fontTitle);
   --height: 40px;
 
   position: relative;
@@ -196,6 +196,8 @@ onUnmounted(() => {
     position: absolute;
     left: 0;
     top: 0;
+    display: flex;
+    align-items: center;
     padding: inherit;
     border: 0;
     width: 100%;
@@ -203,7 +205,8 @@ onUnmounted(() => {
     text-align: left;
     background-color: #f3f4f6;
     border-radius: inherit;
-    font-family: var(--fontText);
+    font-family: var(--font);
+    font-weight: 500;
   }
 }
 
@@ -238,13 +241,13 @@ onUnmounted(() => {
 }
 
 .select.opened .select__dropdown {
-  top: 100%;
+  top: calc(100% + 1px);
   opacity: 1;
-  z-index: 1;
+  z-index: 10;
 }
 
 .select__options {
-  max-height: 140px;
+  max-height: 150px;
   overflow: auto;
   scrollbar-width: thin;
   white-space: nowrap;
@@ -261,6 +264,7 @@ onUnmounted(() => {
   border: 0;
   width: 100%;
   padding-inline: 10px;
+  font-family: var(--font);
 }
 
 .select__optionButton:hover {

@@ -24,6 +24,7 @@
   border-radius: 10px;
   transition: all 0.3s ease;
   padding: 0 20px;
+  cursor: pointer;
   font-family: var(--fontTitle);
   filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07))
     drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
@@ -36,6 +37,16 @@
 .button.isBlack {
   background-color: #030712;
   color: white;
+}
+
+.button.isOption {
+  background-color: var(--textGrey);
+  color: white;
+
+  &:hover,
+  &:focus {
+    background-color: hsl(214, 25%, 62%);
+  }
 }
 
 .button.isOutline {
@@ -54,6 +65,14 @@
 .button.isBig {
   height: 50px;
   font-size: 18px;
+}
+
+.button.isSmall {
+  height: 26px;
+  font-size: 12px;
+  border-radius: 6px;
+  padding-inline: 10px;
+  text-transform: capitalize;
 }
 
 /* Box */
