@@ -4,29 +4,33 @@ import "@/assets/styles/style.css";
 import MagicList from "@/components/MagicList.vue";
 import InputSelect from "@/components/Select.vue";
 import Sidebar from "@/components/Sidebar.vue";
-import { useMagic, rpgClasses, schools } from "@/app/useMagic";
-import { useTemplateRef } from "vue";
+import Preview from "@/components/Preview.vue";
+import { useMagic } from "@/app/useMagic";
+import { ref, useTemplateRef } from "vue";
 import { generatePDF } from "@/app/pdf";
+import { Escolas, RpgClasses } from "@/types";
 
 const magicsSidebar = useTemplateRef("magicsSidebar");
+const previewOpened = ref(false);
 
 const { selectedMagics, selectedClass, selectedSchool, allMagics } = useMagic();
+const pdfData = ref("");
 
 const classOptions = [
   { label: "Todas classes", value: "-" },
-  ...rpgClasses.map((item) => ({ label: item, value: item })),
+  ...RpgClasses.map((item) => ({ label: item, value: item })),
 ];
 
 const schoolOptions = [
   { label: "Todas escolas", value: "-" },
-  ...schools.map((item) => ({ label: item, value: item })),
+  ...Escolas.map((item) => ({ label: item, value: item })),
 ];
 
 const clearList = () => {
   selectedMagics.value = [];
 };
 
-const handlePDF = () => {
+const handlePDF = async () => {
   if (selectedMagics.value.length == 0) {
     alert("Selecione as magias primeiro!");
     return;
@@ -34,7 +38,8 @@ const handlePDF = () => {
 
   const magics = allMagics.value.map((item) => item.selecteds).flat();
 
-  generatePDF(magics);
+  pdfData.value = await generatePDF(magics);
+  previewOpened.value = true;
 };
 </script>
 
@@ -42,6 +47,11 @@ const handlePDF = () => {
   <div class="magicsGrid">
     <section class="article">
       <h1>Magias</h1>
+
+      <!-- <dialog id="pdfPreview" ref="preview" class="dialog">
+        <object class="pdf" :data="pdfData" width="100%"></object>
+      </dialog> -->
+      <Preview :data="pdfData" v-model="previewOpened" />
 
       <div>
         <div class="page__filterPanel">

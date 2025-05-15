@@ -69,7 +69,7 @@ export default [
     Escola: "Transmutação",
     Classes: "Bardo, Clériga, Druida, Feiticeira, Mago",
     Descricao:
-      "Essa magia repara um única quebra ou fissura em um objeto que você tocar, como um elo quebrado de uma corrente, duas metades de uma chave partida, um manto rasgado ou o vazamento em um odre. Contanto que a quebra ou fissura não tenha mais de 30 centímetros em qualquer dimensão, você pode remendá-la, não deixando qualquer vestígio do dano anterior.\n\nEssa magia pode reparar fisicamente um item mágico\nou construto, mas a magia não irá restaurar a magia em tais objetos.",
+      "Essa magia repara um única quebra ou fissura em um objeto que você tocar, como um elo quebrado de uma corrente, duas metades de uma chave partida, um manto rasgado ou o vazamento em um odre. Contanto que a quebra ou fissura não tenha mais de 30 centímetros em qualquer dimensão, você pode remendá-la, não deixando qualquer vestígio do dano anterior. Essa magia pode reparar fisicamente um item mágico ou construto, mas a magia não irá restaurar a magia em tais objetos.",
     Material: "dois imãs",
   },
   {
@@ -153,7 +153,7 @@ export default [
     Escola: "Evocação",
     Classes: "Clériga, Feiticeira, Mago",
     Descricao:
-      "Você toca um objeto que não tenha mais 3 metros em qualquer dimensão. Até a magia acabar, o objeto emite luz plena num raio de 6 metros e penumbra por 6 metros adicionais. Cobrir o objeto completamente com alguma coisa opaca bloqueará a luz. A magia termina se você conjurá-la novamente ou dissipá-la com uma ação.\n\nSe você tentar afetar um objeto segurado ou vestido por uma criatura hostil, a criatura deve ser bem sucedida num teste de Destreza para evitar a magia.\n",
+      "Você toca um objeto que não tenha mais 3 metros em qualquer dimensão. Até a magia acabar, o objeto emite luz plena num raio de 6 metros e penumbra por 6 metros adicionais. Cobrir o objeto completamente com alguma coisa opaca bloqueará a luz. A magia termina se você conjurá-la novamente ou dissipá-la com uma ação.\n\nSe você tentar afetar um objeto segurado ou vestido por uma criatura hostil, a criatura deve ser bem sucedida num teste de Destreza para evitar a magia.",
     Material: "um vaga-lume ou musgo fosforescente.",
   },
   {
