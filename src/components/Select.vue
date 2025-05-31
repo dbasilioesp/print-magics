@@ -1,106 +1,102 @@
-<script setup>
-import { ref, useTemplateRef, computed, onMounted, onUnmounted } from "vue";
+<script setup lang="ts">
+import { ref, useTemplateRef, computed, onMounted, onUnmounted } from 'vue'
 
-const props = defineProps({
-  name: String,
-  items: Array,
-  loading: Boolean,
-  queryable: Boolean,
-  disabled: Boolean,
-  placeholder: {
-    type: String,
-    default: "Selecione",
-  },
-  keys: {
-    type: Array,
-    default: () => ["label", "value"],
-  },
-});
-const model = defineModel();
-
-const el = useTemplateRef("el");
-const opened = ref(false);
-const query = ref("");
-const timer = ref(false);
-
-const prepItems = computed(() => {
-  const [labelKey, valueKey] = props.keys;
-  return props.items.map((i) => ({
-    label: i[labelKey],
-    value: i[valueKey],
-  }));
-});
-
-function setDefaultQuery() {
-  const item = prepItems.value.find((i) => i.value == model.value);
-  query.value = item ? item.label : "";
+type Item = {
+  label: string
+  value: string
 }
 
-function closeOutsideClick(e) {
-  if (!el.value.contains(e.target)) {
-    opened.value = false;
-    setDefaultQuery();
+type Props = {
+  name: string
+  items: Item[]
+  loading: boolean
+  queryable: boolean
+  disabled: boolean
+  placeholder: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  placeholder: 'Selecione',
+  keys: () => ['label', 'value'],
+})
+
+const model = defineModel<string | number>({ required: true })
+
+const el = useTemplateRef('el')
+const opened = ref(false)
+const query = ref('')
+const timer = ref(false)
+
+function setDefaultQuery() {
+  const item = props.items.find((i) => i.value == model.value)
+  query.value = item ? item.label : ''
+}
+
+function closeOutsideClick(e: Event) {
+  if (!el.value?.contains(e.target as HTMLElement)) {
+    opened.value = false
+    setDefaultQuery()
   }
 }
 
 function handleFocus() {
-  if (props.disabled) return;
+  if (props.disabled) return
 
   if (props.queryable && !timer.value) {
-    query.value = "";
-    opened.value = true;
+    query.value = ''
+    opened.value = true
   } else {
-    opened.value = !opened.value;
+    opened.value = !opened.value
   }
 }
 
-function selectItem(item) {
-  opened.value = false;
-  timer.value = true;
-  query.value = item.label;
-  model.value = item.value;
-  setTimeout(() => (timer.value = false), 300);
+function selectItem(item: Item) {
+  opened.value = false
+  timer.value = true
+  query.value = item.label
+  model.value = item.value
+  setTimeout(() => (timer.value = false), 300)
 }
 
 const results = computed(() => {
-  if (!props.queryable) return prepItems.value;
-  if (!query.value.trim()) return prepItems.value;
+  if (!props.queryable) return props.items
+  if (!query.value.trim()) return props.items
 
-  let q = query.value.trim();
-  const regex = /[.&()]/gi;
-  q = q.replaceAll(regex, "");
-  const r = new RegExp(q, "gi");
+  let q = query.value.trim()
+  const regex = /[.&()]/gi
+  q = q.replaceAll(regex, '')
+  const r = new RegExp(q, 'gi')
 
-  return prepItems.value.filter((i) => {
-    let label = i.label.trim().replaceAll(regex, "");
-    return r.test(label);
-  });
-});
+  return props.items.filter((i) => {
+    let label = i.label.trim().replaceAll(regex, '')
+    return r.test(label)
+  })
+})
 
 const label = computed(() => {
   if (props.loading) {
-    return "Carregando";
+    return 'Carregando'
   }
   if (model.value != undefined && model.value != null) {
-    const item = prepItems.value.find(
-      (i) => i.value.toString().trim() == model.value.toString().trim()
-    );
-    return item ? item.label : props.placeholder;
+    const item = props.items.find((i) => {
+      return i.value.toString().trim() == model.value.toString().trim()
+    })
+    return item ? item.label : props.placeholder
   }
 
-  return props.placeholder;
-});
+  return props.placeholder
+})
 
 onMounted(() => {
   if (model.value) {
-    setDefaultQuery();
+    setDefaultQuery()
   }
-  window.addEventListener("click", closeOutsideClick);
-});
+  window.addEventListener('click', closeOutsideClick)
+})
 
 onUnmounted(() => {
-  window.removeEventListener("click", closeOutsideClick);
-});
+  window.removeEventListener('click', closeOutsideClick)
+})
 </script>
 
 <template>
@@ -111,20 +107,13 @@ onUnmounted(() => {
         type="text"
         :key="'input'"
         class="select__input"
-        :class="{ transparent }"
         v-model="query"
         @focus="handleFocus"
         @click="handleFocus"
         :disabled="disabled"
         :placeholder="label"
       />
-      <button
-        v-else
-        type="button"
-        for="select"
-        @click="handleFocus"
-        :title="label"
-      >
+      <button v-else type="button" for="select" @click="handleFocus" :title="label">
         {{ label }}
       </button>
       <input type="hidden" :name="name" v-model="model" />
@@ -157,9 +146,7 @@ onUnmounted(() => {
         >
           {{ item.label }}
         </button>
-        <span class="select__emptyMessage" v-else>
-          Nenhuma opção encontrada
-        </span>
+        <span class="select__emptyMessage" v-else> Nenhuma opção encontrada </span>
       </div>
     </div>
   </div>

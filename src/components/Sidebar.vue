@@ -1,54 +1,54 @@
-<script setup>
-defineProps({
-  magics: Array,
-  selectedMagics: Array,
-});
+<script setup lang="ts">
+import type { LibraryMagic } from '@/types'
+import { useTemplateRef, watch } from 'vue'
+import { FiX } from 'vue-icons-plus/fi'
 
-defineEmits(["clear"]);
+type Props = {
+  magics: LibraryMagic[]
+  selectedMagics: string[]
+}
+
+defineOptions({ name: 'Sidebar' })
+
+defineProps<Props>()
+
+defineEmits(['clear'])
+
+const isOpened = defineModel({ required: true })
+const dialog = useTemplateRef('magicsSidebar')
+
+watch(isOpened, () => {
+  if (isOpened.value) {
+    dialog.value?.showModal()
+  } else {
+    dialog.value?.close()
+  }
+})
+
+const close = () => {
+  isOpened.value = false
+}
 </script>
 
 <template>
-  <dialog id="magicsSidebar" class="magicsSidebar" ref="magicsSidebar">
-    <button
-      class="magicsSidebar__buttonClose"
-      type="button"
-      @click="magicsSidebar.close()"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-      </svg>
+  <dialog id="magicsSidebar" class="magicsSidebar" ref="magicsSidebar" @close="close">
+    <button class="magicsSidebar__buttonClose" type="button" @click="close">
+      <FiX />
     </button>
     <div class="magicsSidebar__wrap">
       <h2>Selecionados:</h2>
 
       <Transition mode="out-in" style="--easing: ease-in-out; --timing: 0.25s">
-        <div style="color: gray" v-if="selectedMagics.length === 0">
-          Nenhuma magia selecionada.
-        </div>
+        <div style="color: gray" v-if="selectedMagics.length === 0">Nenhuma magia selecionada.</div>
 
         <div class="magicsSidebar__wrapIn" v-else>
           <div>
-            <button
-              type="button"
-              class="button isSmall isOption"
-              @click="$emit('clear')"
-            >
+            <button type="button" class="button isSmall isOption" @click="$emit('clear')">
               Limpar lista
             </button>
           </div>
 
-          <template v-for="magicNivel in magics" :key="magicNivel.label">
+          <template v-for="magicNivel in magics" :key="magicNivel.title">
             <div v-if="magicNivel.selecteds.length > 0">
               <h3>{{ magicNivel.title }}</h3>
               <div v-for="magic in magicNivel.selecteds" :key="magic.Titulo">

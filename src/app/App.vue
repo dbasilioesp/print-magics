@@ -1,29 +1,29 @@
-<script setup>
+<script setup lang="ts">
 import "@/assets/styles/style.css";
 
 import MagicList from "@/components/MagicList.vue";
 import InputSelect from "@/components/Select.vue";
 import Sidebar from "@/components/Sidebar.vue";
-import Preview from "@/components/Preview.vue";
+import DialogPreview from "@/components/DialogPreview.vue";
 import { useMagic } from "@/app/useMagic";
-import { ref, useTemplateRef } from "vue";
+import { ref } from "vue";
 import { generatePDF } from "@/app/pdf";
-import { Escolas, RpgClasses } from "@/types";
+import { Escolas, RpgClasses, type Magia } from "@/types";
 
-const magicsSidebar = useTemplateRef("magicsSidebar");
 const previewOpened = ref(false);
+const sidebarOpened = ref(false);
 
 const { selectedMagics, selectedClass, selectedSchool, allMagics } = useMagic();
 const pdfData = ref("");
 
 const classOptions = [
   { label: "Todas classes", value: "-" },
-  ...RpgClasses.map((item) => ({ label: item, value: item })),
+  ...RpgClasses.map((item: string) => ({ label: item, value: item })),
 ];
 
 const schoolOptions = [
   { label: "Todas escolas", value: "-" },
-  ...Escolas.map((item) => ({ label: item, value: item })),
+  ...Escolas.map((item: string) => ({ label: item, value: item })),
 ];
 
 const clearList = () => {
@@ -41,6 +41,23 @@ const handlePDF = async () => {
   pdfData.value = await generatePDF(magics);
   previewOpened.value = true;
 };
+
+const selectAll = (nivel: { magics: Magia[] }) => {
+  const set = new Set<string>();
+
+  nivel.magics.forEach((magia: Magia) => set.add(magia.Titulo));
+  selectedMagics.value.forEach((titulo: string) => set.add(titulo));
+
+  selectedMagics.value = [...set];
+};
+
+const clearAll = (nivel: { magics: Magia[] }) => {
+  const titles = nivel.magics.map((magia) => magia.Titulo);
+
+  selectedMagics.value = selectedMagics.value.filter(
+    (titulo: string) => !titles.includes(titulo)
+  );
+};
 </script>
 
 <template>
@@ -48,10 +65,7 @@ const handlePDF = async () => {
     <section class="article">
       <h1>Magias</h1>
 
-      <!-- <dialog id="pdfPreview" ref="preview" class="dialog">
-        <object class="pdf" :data="pdfData" width="100%"></object>
-      </dialog> -->
-      <Preview :data="pdfData" v-model="previewOpened" />
+      <DialogPreview :data="pdfData" v-model="previewOpened" />
 
       <div>
         <div class="page__filterPanel">
@@ -73,7 +87,7 @@ const handlePDF = async () => {
           <button
             type="button"
             class="page__buttonSelecteds button isOutline"
-            @click="magicsSidebar.showModal()"
+            @click="sidebarOpened = true"
           >
             Ver Selecionados
           </button>
@@ -86,7 +100,9 @@ const handlePDF = async () => {
               v-model="selectedMagics"
               :magics="magicNivel.magics"
               v-for="magicNivel in allMagics"
-              :key="magicNivel.label"
+              :key="magicNivel.title"
+              @all="selectAll(magicNivel)"
+              @clear="clearAll(magicNivel)"
             />
           </div>
         </div>
@@ -96,6 +112,7 @@ const handlePDF = async () => {
     <Sidebar
       :selectedMagics="selectedMagics"
       :magics="allMagics"
+      v-model="sidebarOpened"
       @clear="clearList"
     />
   </div>

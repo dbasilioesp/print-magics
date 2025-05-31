@@ -18,9 +18,12 @@
     "@vue/tsconfig": "^0.7.0",
     "typescript": "~5.8.3",
     "vite": "^6.2.0",
+    "vue-icons-plus": "^0.1.8",
     "vue-tsc": "^2.2.8"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/print-magics.umd.cjs",
   "module": "./dist/print-magics.js",
   "exports": {

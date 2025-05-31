@@ -1,88 +1,99 @@
-<script setup>
-import { useTemplateRef, watch } from "vue";
+<script setup lang="ts">
+import type { Magia } from '@/types'
+import { useTemplateRef, watch } from 'vue'
 
-const el = useTemplateRef("dialog");
-const magic = defineModel({ required: true });
-const emit = defineEmits(["previous", "next"]);
+const el = useTemplateRef('dialog')
+const magic = defineModel<Magia>({ required: true })
+const emit = defineEmits(['previous', 'next'])
 
 watch(magic, (newValue) => {
   if (newValue) {
-    el.value.showModal();
+    el.value?.showModal()
   }
-});
+})
 
-const nextCardAnimation = (callback, reverse = false) => {
+const nextCardAnimation = (callback: Function, reverse = false) => {
   const down = {
     opacity: 0,
-    transform: "translate(50%, 100%) rotate(180deg)",
-  };
+    transform: 'translate(50%, 100%) rotate(180deg)',
+  }
 
   const start = {
     opacity: 0,
-    transform: "translate(-50%, -100%) rotate(-180deg)",
-  };
+    transform: 'translate(-50%, -100%) rotate(-180deg)',
+  }
 
   const open = {
     opacity: 1,
-    transform: "translate(0, 0) rotate(0deg)",
-  };
-
-  const timing = { duration: 400, fill: "forwards" };
-  let animation;
-
-  if (!reverse) {
-    animation = el.value.animate([down], timing).onfinish = () => {
-      callback();
-      setTimeout(() => {
-        animation = el.value.animate([start, open], timing).onfinish = () => {
-          animation.cancel();
-        };
-      }, 100);
-    };
-  } else {
-    animation = el.value.animate([start], timing).onfinish = () => {
-      callback();
-      setTimeout(() => {
-        animation = el.value.animate([down, open], timing).onfinish = () => {
-          animation.cancel();
-        };
-      }, 100);
-    };
+    transform: 'translate(0, 0) rotate(0deg)',
   }
 
-  return animation;
-};
+  const timing: KeyframeAnimationOptions = { duration: 400, fill: 'forwards' }
+  let animation: Animation | null = null
 
-const handleClick = (event) => {
-  let rect = el.value.getBoundingClientRect();
+  if (!el.value) return animation
+
+  if (!reverse) {
+    animation = el.value.animate([down], timing)
+    animation.onfinish = () => {
+      callback()
+      setTimeout(() => {
+        if (!el.value) return
+        animation = el.value.animate([start, open], timing)
+        animation.onfinish = () => {
+          animation?.cancel()
+        }
+      }, 100)
+    }
+  } else {
+    animation = el.value.animate([start], timing)
+    animation.onfinish = () => {
+      callback()
+      setTimeout(() => {
+        if (!el.value) return
+        animation = el.value.animate([down, open], timing)
+        animation.onfinish = () => {
+          animation?.cancel()
+        }
+      }, 100)
+    }
+  }
+
+  return animation
+}
+
+const handleClick = (event: MouseEvent) => {
+  if (!el.value) return
+  let rect = el.value.getBoundingClientRect()
   if (
     rect.left > event.clientX ||
     rect.right < event.clientX ||
     rect.top > event.clientY ||
     rect.bottom < event.clientY
   ) {
-    el.value.close();
+    el.value.close()
   }
-};
+}
 
 const handleClose = () => {
-  el.value.close();
+  if (!el.value) return
+  el.value.close()
   setTimeout(() => {
-    magic.value = null;
-  }, 500);
-};
+    magic.value = null
+  }, 500)
+}
 
 const navPrevious = () => {
   nextCardAnimation(() => {
-    emit("previous");
-  }, true);
-};
+    emit('previous')
+  }, true)
+}
 
 const navNext = () => {
   nextCardAnimation(() => {
-    emit("next");
-  });
-};
+    emit('next')
+  })
+}
 </script>
 
 <template>
@@ -109,12 +120,8 @@ const navNext = () => {
       </div>
 
       <nav class="dialog__nav">
-        <button type="button" class="dialog__navbutton" @click="navPrevious">
-          Anterior
-        </button>
-        <button type="button" class="dialog__navbutton" @click="navNext">
-          Próximo
-        </button>
+        <button type="button" class="dialog__navbutton" @click="navPrevious">Anterior</button>
+        <button type="button" class="dialog__navbutton" @click="navNext">Próximo</button>
       </nav>
     </div>
   </dialog>
@@ -122,7 +129,7 @@ const navNext = () => {
 
 <style>
 .dialog {
-  font-family: "Domine";
+  font-family: 'Domine';
   margin: auto;
   border: 0;
   border-radius: 4px;
@@ -130,9 +137,8 @@ const navNext = () => {
   margin: auto;
   padding: 10px 20px 20px;
   box-shadow: var(--lightDropShadow);
-  transition: opacity 0.5s ease-in-out, translate 0.5s ease-in-out,
-    rotate 0.5s ease-in-out, overlay 0.5s allow-discrete,
-    display 0.5s allow-discrete;
+  transition: opacity 0.5s ease-in-out, translate 0.5s ease-in-out, rotate 0.5s ease-in-out,
+    overlay 0.5s allow-discrete, display 0.5s allow-discrete;
 
   /* Close state */
   opacity: 0;
@@ -147,8 +153,7 @@ const navNext = () => {
   }
 
   &::backdrop {
-    transition: display 0.5s allow-discrete, overlay 0.5s allow-discrete,
-      background-color 0.5s;
+    transition: display 0.5s allow-discrete, overlay 0.5s allow-discrete, background-color 0.5s;
     background-color: hsl(0 0 0 / 0);
   }
 
