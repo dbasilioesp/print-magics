@@ -1,3 +1,5 @@
+import type { PDFFont } from 'pdf-lib'
+
 export type Magia = {
   Titulo: string
   TempoConj: string
@@ -40,4 +42,9 @@ export type LibraryMagic = {
   title: string
   magics: Magia[]
   selecteds: Magia[]
+}
+
+export type SourceFont = {
+  base: PDFFont
+  bold: PDFFont
 }

@@ -4,7 +4,7 @@ import { useTemplateRef, watch } from 'vue'
 import { FiX } from 'vue-icons-plus/fi'
 
 type Props = {
-  magics: LibraryMagic[]
+  library: LibraryMagic[]
   selectedMagics: string[]
 }
 
@@ -48,7 +48,7 @@ const close = () => {
             </button>
           </div>
 
-          <template v-for="magicNivel in magics" :key="magicNivel.title">
+          <template v-for="magicNivel in library" :key="magicNivel.title">
             <div v-if="magicNivel.selecteds.length > 0">
               <h3>{{ magicNivel.title }}</h3>
               <div v-for="magic in magicNivel.selecteds" :key="magic.Titulo">

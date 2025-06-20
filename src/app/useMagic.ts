@@ -10,7 +10,7 @@ export function useMagic() {
   const selectedClass = ref<Classe>('')
   const selectedSchool = ref<Escola>('')
 
-  const allMagics: Ref<LibraryMagic[]> = computed(() => {
+  const library: Ref<LibraryMagic[]> = computed(() => {
     let truquesFil = truques as Magia[]
     let nivel1Fil = nivel1 as Magia[]
     let nivel2Fil = nivel2 as Magia[]
@@ -56,6 +56,6 @@ export function useMagic() {
     selectedClass,
     selectedMagics,
     selectedSchool,
-    allMagics,
+    library,
   }
 }

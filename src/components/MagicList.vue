@@ -1,52 +1,48 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import MagicSelect from "./MagicSelect.vue";
-import DialogMagicInfo from "./DialogMagicInfo.vue";
-import type { Magia } from "@/types";
+import { ref } from 'vue'
+import MagicSelect from './MagicSelect.vue'
+import DialogMagicInfo from './DialogMagicInfo.vue'
+import type { Magia } from '@/types'
 
 interface Props {
-  label: string;
-  magics: Magia[];
+  label: string
+  magics: Magia[]
 }
 
-const selectedMagics = defineModel();
+const selectedMagics = defineModel<string[]>({ required: true })
 
-const props = defineProps<Props>();
+const props = defineProps<Props>()
 
 defineEmits<{
-  all: [];
-  clear: [];
-}>();
+  all: []
+  clear: []
+}>()
 
-const magicInfo = ref<Magia | null>(null);
+const magicInfo = ref<Magia | null>(null)
 
 const openModal = (magic: Magia) => {
-  magicInfo.value = magic;
-};
+  magicInfo.value = magic
+}
 
 const handleNext = () => {
-  const index = props.magics.findIndex(
-    (magic) => magicInfo.value?.Titulo == magic.Titulo
-  );
-  const nextIndex = index + 1;
+  const index = props.magics.findIndex((magic) => magicInfo.value?.Titulo == magic.Titulo)
+  const nextIndex = index + 1
   if (props.magics[nextIndex]) {
-    magicInfo.value = props.magics[nextIndex];
+    magicInfo.value = props.magics[nextIndex]
   } else {
-    magicInfo.value = props.magics[0];
+    magicInfo.value = props.magics[0]
   }
-};
+}
 
 const handlePrevious = () => {
-  const index = props.magics.findIndex(
-    (magic) => magicInfo.value.Titulo == magic.Titulo
-  );
-  const prevIndex = index - 1;
+  const index = props.magics.findIndex((magic) => magicInfo.value?.Titulo == magic.Titulo)
+  const prevIndex = index - 1
   if (props.magics[prevIndex]) {
-    magicInfo.value = props.magics[prevIndex];
+    magicInfo.value = props.magics[prevIndex]
   } else {
-    magicInfo.value = props.magics[props.magics.length - 1];
+    magicInfo.value = props.magics[props.magics.length - 1]
   }
-};
+}
 </script>
 
 <template>
@@ -54,18 +50,10 @@ const handlePrevious = () => {
     <div class="mList__header">
       <h3 class="mList__title" v-if="magics.length">{{ label }}</h3>
       <div class="mList__headerButtons">
-        <button
-          type="button"
-          class="button isOption isExtraSmall"
-          @click="$emit('all')"
-        >
+        <button type="button" class="button isOption isExtraSmall" @click="$emit('all')">
           Todos
         </button>
-        <button
-          type="button"
-          class="button isOption isExtraSmall"
-          @click="$emit('clear')"
-        >
+        <button type="button" class="button isOption isExtraSmall" @click="$emit('clear')">
           Limpar
         </button>
       </div>
@@ -80,6 +68,7 @@ const handlePrevious = () => {
       />
     </div>
     <DialogMagicInfo
+      v-if="magicInfo"
       id="magicInfo"
       v-model="magicInfo"
       @next="handleNext"

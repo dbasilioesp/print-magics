@@ -1,63 +1,67 @@
 <script setup lang="ts">
-import "@/assets/styles/style.css";
+import '@/assets/styles/style.css'
 
-import MagicList from "@/components/MagicList.vue";
-import InputSelect from "@/components/Select.vue";
-import Sidebar from "@/components/Sidebar.vue";
-import DialogPreview from "@/components/DialogPreview.vue";
-import { useMagic } from "@/app/useMagic";
-import { ref } from "vue";
-import { generatePDF } from "@/app/pdf";
-import { Escolas, RpgClasses, type Magia } from "@/types";
+import MagicList from '@/components/MagicList.vue'
+import InputSelect from '@/components/Select.vue'
+import Sidebar from '@/components/Sidebar.vue'
+import DialogPDFPreview from '@/components/DialogPDFPreview.vue'
+import { useMagic } from '@/app/useMagic'
+import { ref } from 'vue'
+import { generatePDF } from '@/app/pdf'
+import { Escolas, RpgClasses, type Magia } from '@/types'
 
-const previewOpened = ref(false);
-const sidebarOpened = ref(false);
+const previewOpened = ref(false)
+const sidebarOpened = ref(false)
 
-const { selectedMagics, selectedClass, selectedSchool, allMagics } = useMagic();
-const pdfData = ref("");
+const { selectedMagics, selectedClass, selectedSchool, library } = useMagic()
+const pdfData = ref('')
 
 const classOptions = [
-  { label: "Todas classes", value: "-" },
+  { label: 'Todas classes', value: '-' },
   ...RpgClasses.map((item: string) => ({ label: item, value: item })),
-];
+]
 
 const schoolOptions = [
-  { label: "Todas escolas", value: "-" },
+  { label: 'Todas escolas', value: '-' },
   ...Escolas.map((item: string) => ({ label: item, value: item })),
-];
+]
 
 const clearList = () => {
-  selectedMagics.value = [];
-};
+  selectedMagics.value = []
+}
 
 const handlePDF = async () => {
   if (selectedMagics.value.length == 0) {
-    alert("Selecione as magias primeiro!");
-    return;
+    alert('Selecione as magias primeiro!')
+    return
   }
 
-  const magics = allMagics.value.map((item) => item.selecteds).flat();
+  // const magics = library.value.map((item) => item.selecteds).flat()
 
-  pdfData.value = await generatePDF(magics);
-  previewOpened.value = true;
-};
+  pdfData.value = await generatePDF(library.value)
+  previewOpened.value = true
+}
 
 const selectAll = (nivel: { magics: Magia[] }) => {
-  const set = new Set<string>();
+  const set = new Set<string>()
 
-  nivel.magics.forEach((magia: Magia) => set.add(magia.Titulo));
-  selectedMagics.value.forEach((titulo: string) => set.add(titulo));
+  nivel.magics.forEach((magia: Magia) => set.add(magia.Titulo))
+  selectedMagics.value.forEach((titulo: string) => set.add(titulo))
 
-  selectedMagics.value = [...set];
-};
+  selectedMagics.value = [...set]
+}
 
 const clearAll = (nivel: { magics: Magia[] }) => {
-  const titles = nivel.magics.map((magia) => magia.Titulo);
+  const titles = nivel.magics.map((magia) => magia.Titulo)
 
-  selectedMagics.value = selectedMagics.value.filter(
-    (titulo: string) => !titles.includes(titulo)
-  );
-};
+  selectedMagics.value = selectedMagics.value.filter((titulo: string) => !titles.includes(titulo))
+}
+
+selectedMagics.value.push(library.value[0].magics[0].Titulo)
+selectedMagics.value.push(library.value[0].magics[1].Titulo)
+selectedMagics.value.push(library.value[0].magics[2].Titulo)
+selectedMagics.value.push(library.value[0].magics[3].Titulo)
+selectedMagics.value.push(library.value[0].magics[4].Titulo)
 </script>
 
 <template>
@@ -65,25 +69,25 @@ const clearAll = (nivel: { magics: Magia[] }) => {
     <section class="article">
       <h1>Magias</h1>
 
-      <DialogPreview :data="pdfData" v-model="previewOpened" />
+      <DialogPDFPreview :data="pdfData" v-model="previewOpened" />
 
       <div>
         <div class="page__filterPanel">
           <InputSelect
             v-model="selectedClass"
+            name="class"
             :items="classOptions"
             placeholder="Filtrar por classe"
           />
 
           <InputSelect
             v-model="selectedSchool"
+            name="school"
             :items="schoolOptions"
             placeholder="Filtrar por escola"
           />
 
-          <button type="button" class="button" @click="handlePDF">
-            Gerar PDF
-          </button>
+          <button type="button" class="button" @click="handlePDF">Gerar PDF</button>
           <button
             type="button"
             class="page__buttonSelecteds button isOutline"
@@ -99,7 +103,7 @@ const clearAll = (nivel: { magics: Magia[] }) => {
               :label="magicNivel.title"
               v-model="selectedMagics"
               :magics="magicNivel.magics"
-              v-for="magicNivel in allMagics"
+              v-for="magicNivel in library"
               :key="magicNivel.title"
               @all="selectAll(magicNivel)"
               @clear="clearAll(magicNivel)"
@@ -109,12 +113,7 @@ const clearAll = (nivel: { magics: Magia[] }) => {
       </div>
     </section>
 
-    <Sidebar
-      :selectedMagics="selectedMagics"
-      :magics="allMagics"
-      v-model="sidebarOpened"
-      @clear="clearList"
-    />
+    <Sidebar :selectedMagics :library v-model="sidebarOpened" @clear="clearList" />
   </div>
 </template>
 

@@ -9,15 +9,17 @@ type Item = {
 type Props = {
   name: string
   items: Item[]
-  loading: boolean
-  queryable: boolean
-  disabled: boolean
+  loading?: boolean
+  queryable?: boolean
+  disabled?: boolean
   placeholder: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   placeholder: 'Selecione',
-  keys: () => ['label', 'value'],
+  loading: false,
+  queryable: false,
+  disabled: false,
 })
 
 const model = defineModel<string | number>({ required: true })
